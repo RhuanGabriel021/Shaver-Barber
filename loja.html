@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Loja | Shaver Barber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- BOOTSTRAP ICONS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- FONTES: OSWALD (títulos) + POPPINS (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-dark-alt: #050816;
+      --accent: #00ff57;
+      --accent-soft: #26ff7a;
+      --text-main: #f9fafb;
+      --text-soft: #e5e7eb;
+      --card-bg: rgba(15,23,42,0.98);
+      --border-soft: rgba(148,163,184,0.2);
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(0,255,87,0.2) 0, transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,255,87,0.15) 0, transparent 55%),
+        linear-gradient(145deg, var(--bg-dark-alt), #000);
+      color: var(--text-main);
+    }
+
+    .loja-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOPO */
+    .topo-loja {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.25);
+      background: radial-gradient(circle at top left, rgba(0,255,87,0.12), transparent 40%),
+                  rgba(2,6,23,0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .topo-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topo-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0,255,87,0.45));
+    }
+
+    .topo-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .topo-title span.app-name {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .topo-title span.app-name strong {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(0,255,87,0.6);
+    }
+
+    .topo-title span.section {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .topo-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-voltar {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-voltar:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-cart {
+      position: relative;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-cart i {
+      font-size: 1.1rem;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: #000;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      padding: 0 5px;
+      min-width: 16px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    .secao {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      padding: 16px 14px 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      margin-bottom: 16px;
+    }
+
+    .secao-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .secao-titulo {
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .secao-titulo i {
+      font-size: 1.1rem;
+    }
+
+    .secao-subtitulo {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .badge-info {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .products-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (min-width: 576px) {
+      .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 992px) {
+      .products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .product-card {
+      background: rgba(15,23,42,0.95);
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 10px 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      height: 100%;
+    }
+
+    .product-img-wrapper {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: radial-gradient(circle at top, rgba(0,255,87,0.15), transparent 60%);
+      margin-bottom: 4px;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-badges {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      margin-bottom: 2px;
+    }
+
+    .badge-brand {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 2px 7px;
+      font-size: 0.7rem;
+      color: var(--accent-soft);
+    }
+
+    .badge-tag {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.3);
+      padding: 2px 7px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .product-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin: 0;
+    }
+
+    .product-desc {
+      font-size: 0.74rem;
+      color: var(--text-soft);
+      margin: 0;
+      min-height: 32px;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      gap: 6px;
+    }
+
+    .product-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+    }
+
+    .product-unit {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .btn-add {
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .btn-add i {
+      font-size: 0.9rem;
+    }
+
+    .btn-add:hover {
+      box-shadow: 0 6px 16px rgba(0,255,87,0.35);
+    }
+
+    .toast-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      background: rgba(15,23,42,0.98);
+      color: var(--text-main);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(148,163,184,0.5);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 9999;
+    }
+
+    .toast-bar i {
+      color: var(--accent-soft);
+    }
+
+    .nota-simulacao {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="loja-page">
+
+  <!-- TOPO -->
+  <header class="topo-loja">
+    <div class="topo-left">
+      <img src="shavv.png" alt="Logo Shaver Barber" class="topo-logo">
+      <div class="topo-title">
+        <span class="app-name"><strong>Shaver</strong> Barber</span>
+        <span class="section">Loja da barbearia</span>
+      </div>
+    </div>
+
+    <div class="topo-actions">
+      <button class="btn-voltar" onclick="window.location.href='cliente.html'">
+        <i class="bi bi-arrow-left"></i>
+        <span>Voltar</span>
+      </button>
+      <button class="btn-cart" onclick="window.location.href='carrinho.html'">
+        <i class="bi bi-bag"></i>
+        <span id="cartCount" class="cart-badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="container-fluid mt-3 mb-3">
+
+    <!-- SEÇÃO BARBEARIA -->
+    <section class="secao">
+      <div class="secao-header">
+        <div class="secao-titulo">
+          <i class="bi bi-scissors"></i> Produtos de barbearia (Fox)
+        </div>
+        <span class="badge-info">Linha profissional para cabelo e barba</span>
+      </div>
+      <p class="secao-subtitulo">
+        Produtos Fox For Men para deixar o corte e a barba no padrão de barbearia.
+      </p>
+
+      <div class="products-grid">
+
+        <!-- Pomada Efeito Molhado -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Pomada+Efeito+Molhado"
+                 alt="Pomada efeito molhado Fox For Men">
+          </div>
+          <div class="product-badges">
+            <span class="badge-brand">Fox For Men</span>
+            <span class="badge-tag">Pomada molhada</span>
+          </div>
+          <h3 class="product-name">Pomada Efeito Molhado</h3>
+          <p class="product-desc">
+            Fixação média e brilho molhado, ideal para penteados alinhados e clássicos.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 28,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Pomada Efeito Molhado" data-valor="28.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Pomada Efeito Seco -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Pomada+Efeito+Seco"
+                 alt="Pomada efeito seco Fox For Men">
+          </div>
+          <div class="product-badges">
+            <span class="badge-brand">Fox For Men</span>
+            <span class="badge-tag">Efeito seco</span>
+          </div>
+          <h3 class="product-name">Pomada Efeito Seco</h3>
+          <p class="product-desc">
+            Acabamento fosco e fixação forte para penteados mais estruturados.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 25,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Pomada Efeito Seco" data-valor="25.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Pomada Efeito Mate -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Pomada+Efeito+Mate"
+                 alt="Pomada efeito mate Fox For Men">
+          </div>
+          <div class="product-badges">
+            <span class="badge-brand">Fox For Men</span>
+            <span class="badge-tag">Efeito matte</span>
+          </div>
+          <h3 class="product-name">Pomada Efeito Mate</h3>
+          <p class="product-desc">
+            Textura leve, sem brilho, perfeita para visual natural porém modelado.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 25,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Pomada Efeito Mate" data-valor="25.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Balm para Barba -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Balm+para+Barba"
+                 alt="Balm para barba Fox For Men">
+          </div>
+          <div class="product-badges">
+            <span class="badge-brand">Fox For Men</span>
+            <span class="badge-tag">Barba</span>
+          </div>
+          <h3 class="product-name">Balm para a barba 120ml</h3>
+          <p class="product-desc">
+            Hidrata, alinha os fios e reduz irritações após o barbear.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 35,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Balm para a barba 120ml" data-valor="35.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Shampoo -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Shampoo+Fox"
+                 alt="Shampoo Fox For Men">
+          </div>
+          <div class="product-badges">
+            <span class="badge-brand">Fox For Men</span>
+            <span class="badge-tag">Shampoo 4 em 1</span>
+          </div>
+          <h3 class="product-name">Shampoo 4 em 1 240ml</h3>
+          <p class="product-desc">
+            Para cabelo, barba e corpo. Limpeza suave com brilho e maciez.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 20,90</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Shampoo 4 em 1 240ml" data-valor="20.90">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Condicionador -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Condicionador+Fox"
+                 alt="Condicionador Fox For Men">
+          </div>
+          <div class="product-badges">
+            <span class="badge-brand">Fox For Men</span>
+            <span class="badge-tag">Condicionador</span>
+          </div>
+          <h3 class="product-name">Condicionador IceFresh 240ml</h3>
+          <p class="product-desc">
+            Sensação refrescante, desembaraça e hidrata os fios na medida certa.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 16,90</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Condicionador IceFresh 240ml" data-valor="16.90">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="nota-simulacao">
+        *Valores e imagens meramente ilustrativos, usados apenas para simulação dentro do app.
+      </p>
+    </section>
+
+    <!-- SEÇÃO BEBIDAS E SNACKS -->
+    <section class="secao">
+      <div class="secao-header">
+        <div class="secao-titulo">
+          <i class="bi bi-cup-straw"></i> Bebidas & snacks
+        </div>
+        <span class="badge-info">Consumos na barbearia para lançar no carrinho</span>
+      </div>
+      <p class="secao-subtitulo">
+        Ofereça uma experiência completa: bebidas geladas, snacks e aquele café enquanto o cliente espera.
+      </p>
+
+      <div class="products-grid">
+
+        <!-- Refrigerante -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Refrigerante+lata"
+                 alt="Refrigerante lata">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Bebida</span>
+            <span class="badge-tag">350ml</span>
+          </div>
+          <h3 class="product-name">Refrigerante lata 350ml</h3>
+          <p class="product-desc">
+            Latas variadas (cola, guaraná, laranja). Servidas sempre bem geladas.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 6,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Refrigerante lata 350ml" data-valor="6.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Cerveja -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Cerveja+long+neck"
+                 alt="Cerveja long neck">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Bebida</span>
+            <span class="badge-tag">alcoólica</span>
+          </div>
+          <h3 class="product-name">Cerveja long neck</h3>
+          <p class="product-desc">
+            Marcas variadas, servidas trincando de geladas (apenas para maiores de 18).
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 10,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Cerveja long neck" data-valor="10.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Água -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=%C3%81gua+mineral"
+                 alt="Água mineral">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Bebida</span>
+            <span class="badge-tag">Sem gás</span>
+          </div>
+          <h3 class="product-name">Água mineral 500ml</h3>
+          <p class="product-desc">
+            Opção leve para acompanhar o atendimento.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 4,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Água mineral 500ml" data-valor="4.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Energético -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Energ%C3%A9tico"
+                 alt="Energético">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Bebida</span>
+            <span class="badge-tag">lata</span>
+          </div>
+          <h3 class="product-name">Energético lata</h3>
+          <p class="product-desc">
+            Para aquele cliente que chega direto do trabalho e precisa de um up.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 12,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Energético lata" data-valor="12.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Salgadinho -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Salgadinho"
+                 alt="Salgadinho pacote">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Snack</span>
+            <span class="badge-tag">pacote</span>
+          </div>
+          <h3 class="product-name">Salgadinho gourmet</h3>
+          <p class="product-desc">
+            Mix de sabores (queijo, churrasco, bacon) em pacotes individuais.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 7,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Salgadinho gourmet" data-valor="7.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Batata chips -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Batata+chips"
+                 alt="Batata chips">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Snack</span>
+            <span class="badge-tag">lata/pacote</span>
+          </div>
+          <h3 class="product-name">Batata chips individual</h3>
+          <p class="product-desc">
+            Latas ou pacotes individuais para acompanhar a bebida.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 8,00</div>
+              <div class="product-unit">unidade</div>
+            </div>
+            <button class="btn-add" data-produto="Batata chips individual" data-valor="8.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+        <!-- Café -->
+        <article class="product-card">
+          <div class="product-img-wrapper">
+            <img class="product-img"
+                 src="https://via.placeholder.com/400x260.png?text=Caf%C3%A9+expresso"
+                 alt="Café expresso">
+          </div>
+          <div class="product-badges">
+            <span class="badge-tag">Bebida quente</span>
+          </div>
+          <h3 class="product-name">Café expresso</h3>
+          <p class="product-desc">
+            Café expresso curto ou longo, na conta do cliente.
+          </p>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">R$ 6,00</div>
+              <div class="product-unit">xícara</div>
+            </div>
+            <button class="btn-add" data-produto="Café expresso" data-valor="6.00">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toastBar" class="toast-bar">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastText">Produto adicionado ao carrinho.</span>
+</div>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const cartCountSpan = document.getElementById('cartCount');
+  const toastBar = document.getElementById('toastBar');
+  const toastText = document.getElementById('toastText');
+
+  function obterQuantidadeCarrinho() {
+    try {
+      const arr = JSON.parse(localStorage.getItem('shaver_cart_items') || '[]');
+      return Array.isArray(arr) ? arr.length : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function atualizarBadgeCarrinho() {
+    if (!cartCountSpan) return;
+    cartCountSpan.textContent = obterQuantidadeCarrinho();
+  }
+
+  function mostrarToast(mensagem) {
+    toastText.textContent = mensagem;
+    toastBar.style.display = 'flex';
+    setTimeout(() => {
+      toastBar.style.display = 'none';
+    }, 1800);
+  }
+
+  function adicionarItemCarrinho(item) {
+    const atual = JSON.parse(localStorage.getItem('shaver_cart_items') || '[]');
+    atual.push(item);
+    localStorage.setItem('shaver_cart_items', JSON.stringify(atual));
+    atualizarBadgeCarrinho();
+  }
+
+  // Listener para todos os botões "Add"
+  document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nomeProduto = btn.dataset.produto || 'Produto';
+      const valor = Number(btn.dataset.valor || '0');
+
+      const itemCarrinho = {
+        tipo: "produto-loja",
+        descricao: nomeProduto,
+        valor: valor,
+        origem: "loja",
+        criadoEm: new Date().toISOString()
+      };
+
+      adicionarItemCarrinho(itemCarrinho);
+      mostrarToast(`${nomeProduto} adicionado ao carrinho (simulação).`);
+    });
+  });
+
+  // Inicializa badge com o que já veio da página de cliente (50%) + produtos
+  atualizarBadgeCarrinho();
+</script>
+
+</body>
+</html>

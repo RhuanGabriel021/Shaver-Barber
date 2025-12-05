@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Carrinho | Shaver Barber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- BOOTSTRAP ICONS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- FONTES: OSWALD (títulos) + POPPINS (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-dark-alt: #050816;
+      --accent: #00ff57;
+      --accent-soft: #26ff7a;
+      --text-main: #f9fafb;
+      --text-soft: #e5e7eb;
+      --card-bg: rgba(15,23,42,0.98);
+      --border-soft: rgba(148,163,184,0.2);
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(0,255,87,0.2) 0, transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,255,87,0.15) 0, transparent 55%),
+        linear-gradient(145deg, var(--bg-dark-alt), #000);
+      color: var(--text-main);
+    }
+
+    .carrinho-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOPO */
+    .topo-carrinho {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.25);
+      background: radial-gradient(circle at top left, rgba(0,255,87,0.12), transparent 40%),
+                  rgba(2,6,23,0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .topo-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topo-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0,255,87,0.45));
+    }
+
+    .topo-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .topo-title span.app-name {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .topo-title span.app-name strong {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(0,255,87,0.6);
+    }
+
+    .topo-title span.section {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .topo-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-voltar {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-voltar:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-cart {
+      position: relative;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-cart i {
+      font-size: 1.1rem;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: #000;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      padding: 0 5px;
+      min-width: 16px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    .card-main {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      padding: 16px 14px 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      margin-bottom: 16px;
+    }
+
+    .card-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-title-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .card-title-main i {
+      font-size: 1.1rem;
+    }
+
+    .tag-info {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px 10px 5px;
+      color: var(--text-soft);
+      font-size: 0.85rem;
+    }
+
+    .empty-icon {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+      color: var(--accent-soft);
+    }
+
+    .empty-actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-outline-light-small {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-outline-light-small:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .cart-items-list {
+      margin-top: 6px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.96);
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+    }
+
+    .cart-item-left {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .cart-item-meta {
+      font-size: 0.74rem;
+      color: var(--text-soft);
+    }
+
+    .badge-tipo {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      margin-right: 4px;
+    }
+
+    .badge-servico {
+      color: var(--accent-soft);
+      border-color: rgba(34,197,94,0.8);
+    }
+
+    .badge-produto {
+      color: #38bdf8;
+      border-color: rgba(56,189,248,0.8);
+    }
+
+    .cart-item-right {
+      text-align: right;
+      min-width: 90px;
+    }
+
+    .cart-item-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+    }
+
+    .btn-remove {
+      margin-top: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-remove i {
+      font-size: 0.8rem;
+    }
+
+    .btn-remove:hover {
+      color: var(--danger);
+    }
+
+    .totals-card {
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px dashed rgba(148,163,184,0.55);
+      padding: 10px 12px;
+      font-size: 0.82rem;
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .total-line strong {
+      font-weight: 600;
+    }
+
+    .total-line.total-geral {
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(148,163,184,0.55);
+      font-size: 0.9rem;
+    }
+
+    .nota-simulacao {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    .actions-footer {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
+    .btn-clear {
+      border-radius: 999px;
+      border: 1px solid rgba(248,113,113,0.7);
+      background: transparent;
+      color: #fecaca;
+      font-size: 0.78rem;
+      padding: 7px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-clear:hover {
+      background: rgba(127,29,29,0.6);
+      border-color: rgba(248,113,113,1);
+    }
+
+    .btn-finalizar {
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-finalizar i {
+      font-size: 0.95rem;
+    }
+
+    .btn-finalizar:hover {
+      box-shadow: 0 8px 20px rgba(0,255,87,0.35);
+    }
+
+    .toast-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      background: rgba(15,23,42,0.98);
+      color: var(--text-main);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(148,163,184,0.5);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 9999;
+    }
+
+    .toast-bar i {
+      color: var(--accent-soft);
+    }
+  </style>
+</head>
+
+<body>
+<div class="carrinho-page">
+
+  <!-- TOPO -->
+  <header class="topo-carrinho">
+    <div class="topo-left">
+      <img src="shavv.png" alt="Logo Shaver Barber" class="topo-logo">
+      <div class="topo-title">
+        <span class="app-name"><strong>Shaver</strong> Barber</span>
+        <span class="section">Carrinho de consumos & serviços</span>
+      </div>
+    </div>
+
+    <div class="topo-actions">
+      <button class="btn-voltar" onclick="window.location.href='clientes.html'">
+        <i class="bi bi-arrow-left"></i>
+        <span>Área do cliente</span>
+      </button>
+      <button class="btn-cart">
+        <i class="bi bi-bag"></i>
+        <span id="cartCount" class="cart-badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="container-fluid mt-3 mb-3">
+    <section class="card-main">
+      <div class="card-header-top">
+        <div class="card-title-main">
+          <i class="bi bi-receipt-cutoff"></i>
+          <span>Resumo do carrinho</span>
+        </div>
+        <span class="tag-info" id="tagResumo">
+          Você tem 0 item(s) pendentes para pagamento.
+        </span>
+      </div>
+
+      <div id="cartEmpty" class="empty-state" style="display: none;">
+        <div class="empty-icon">
+          <i class="bi bi-bag-dash"></i>
+        </div>
+        <p>Seu carrinho está vazio no momento.</p>
+        <div class="empty-actions">
+          <button class="btn-outline-light-small" onclick="window.location.href='clientes.html'">
+            <i class="bi bi-scissors"></i>
+            <span>Voltar para agendamentos</span>
+          </button>
+          <button class="btn-outline-light-small" onclick="window.location.href='loja.html'">
+            <i class="bi bi-bag-plus"></i>
+            <span>Ir para a loja</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="cartItems" class="cart-items-list"></div>
+
+      <div id="cartTotals" class="totals-card" style="display: none;">
+        <div class="total-line">
+          <span>Serviços (restante 50%)</span>
+          <span id="totalServicos">R$ 0,00</span>
+        </div>
+        <div class="total-line">
+          <span>Produtos & consumos</span>
+          <span id="totalProdutos">R$ 0,00</span>
+        </div>
+        <div class="total-line total-geral">
+          <strong>Total geral</strong>
+          <strong id="totalGeral">R$ 0,00</strong>
+        </div>
+        <p class="nota-simulacao">
+          *Simulação: este total representa o que será cobrado no caixa da barbearia,
+          somando restante dos serviços + produtos/consumos.
+        </p>
+      </div>
+
+      <div id="cartActions" class="actions-footer" style="display: none;">
+        <button class="btn-clear" onclick="limparCarrinho()">
+          <i class="bi bi-trash"></i>
+          <span>Limpar carrinho</span>
+        </button>
+        <button class="btn-finalizar" onclick="finalizarSimulacao()">
+          <i class="bi bi-cash-coin"></i>
+          <span>Finalizar (simulação)</span>
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toastBar" class="toast-bar">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastText">Ação realizada.</span>
+</div>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const STORAGE_KEY = 'shaver_cart_items';
+
+  const cartCountSpan = document.getElementById('cartCount');
+  const tagResumo = document.getElementById('tagResumo');
+  const cartEmpty = document.getElementById('cartEmpty');
+  const cartItemsDiv = document.getElementById('cartItems');
+  const cartTotalsDiv = document.getElementById('cartTotals');
+  const cartActionsDiv = document.getElementById('cartActions');
+
+  const totalServicosSpan = document.getElementById('totalServicos');
+  const totalProdutosSpan = document.getElementById('totalProdutos');
+  const totalGeralSpan = document.getElementById('totalGeral');
+
+  const toastBar = document.getElementById('toastBar');
+  const toastText = document.getElementById('toastText');
+
+  let itensCarrinho = [];
+
+  function formatarMoeda(valor) {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+  }
+
+  function carregarCarrinho() {
+    try {
+      const dados = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      itensCarrinho = Array.isArray(dados) ? dados : [];
+    } catch (e) {
+      itensCarrinho = [];
+    }
+  }
+
+  function salvarCarrinho() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(itensCarrinho));
+  }
+
+  function obterQuantidadeCarrinho() {
+    return itensCarrinho.length;
+  }
+
+  function atualizarBadgeCarrinho() {
+    cartCountSpan.textContent = obterQuantidadeCarrinho();
+  }
+
+  function mostrarToast(mensagem) {
+    toastText.textContent = mensagem;
+    toastBar.style.display = 'flex';
+    setTimeout(() => {
+      toastBar.style.display = 'none';
+    }, 1800);
+  }
+
+  function removerItem(index) {
+    if (index < 0 || index >= itensCarrinho.length) return;
+    const item = itensCarrinho[index];
+    itensCarrinho.splice(index, 1);
+    salvarCarrinho();
+    renderizarCarrinho();
+    mostrarToast(`Item removido do carrinho.`);
+  }
+
+  function limparCarrinho() {
+    if (!confirm('Deseja realmente limpar todo o carrinho?')) return;
+    itensCarrinho = [];
+    salvarCarrinho();
+    renderizarCarrinho();
+    mostrarToast('Carrinho limpo (simulação).');
+  }
+
+  function finalizarSimulacao() {
+    if (itensCarrinho.length === 0) {
+      alert('Seu carrinho está vazio.');
+      return;
+    }
+
+    const totalGeral = itensCarrinho.reduce((acc, item) => acc + Number(item.valor || 0), 0);
+    alert(
+      'Simulação de pagamento concluída.\n\n' +
+      'Total geral: ' + formatarMoeda(totalGeral) + '\n\n' +
+      'Na prática, este valor seria pago no caixa da barbearia.\n' +
+      '(Aqui estamos apenas simulando, o carrinho continuará com os itens.)'
+    );
+  }
+
+  function renderizarCarrinho() {
+    const qtd = obterQuantidadeCarrinho();
+    atualizarBadgeCarrinho();
+
+    if (qtd === 0) {
+      cartEmpty.style.display = 'block';
+      cartItemsDiv.style.display = 'none';
+      cartTotalsDiv.style.display = 'none';
+      cartActionsDiv.style.display = 'none';
+      tagResumo.textContent = 'Você não possui itens pendentes no carrinho.';
+      return;
+    }
+
+    cartEmpty.style.display = 'none';
+    cartItemsDiv.style.display = 'block';
+    cartTotalsDiv.style.display = 'block';
+    cartActionsDiv.style.display = 'flex';
+
+    tagResumo.textContent = `Você tem ${qtd} item(s) pendentes para pagamento.`;
+
+    cartItemsDiv.innerHTML = '';
+
+    let totalServicos = 0;
+    let totalProdutos = 0;
+
+    itensCarrinho.forEach((item, index) => {
+      const valor = Number(item.valor || 0);
+      const tipo = item.tipo || '';
+      const descricao = item.descricao || 'Item';
+
+      let isServico = (tipo === 'servico-restante');
+      if (isServico) {
+        totalServicos += valor;
+      } else {
+        totalProdutos += valor;
+      }
+
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('cart-item');
+
+      const left = document.createElement('div');
+      left.classList.add('cart-item-left');
+
+      const title = document.createElement('div');
+      title.classList.add('cart-item-title');
+      title.textContent = descricao;
+
+      const meta = document.createElement('div');
+      meta.classList.add('cart-item-meta');
+
+      const badgeTipo = document.createElement('span');
+      badgeTipo.classList.add('badge-tipo');
+      if (isServico) {
+        badgeTipo.classList.add('badge-servico');
+        badgeTipo.textContent = 'Serviço (restante 50%)';
+      } else {
+        badgeTipo.classList.add('badge-produto');
+        badgeTipo.textContent = 'Produto / consumo';
+      }
+
+      meta.appendChild(badgeTipo);
+
+      // Info extra para serviço
+      if (isServico && item.data && item.horarios && item.horarios.length > 0 && item.profissionalId) {
+        const infoExtra = document.createElement('span');
+        const dataFormatada = item.data.split('-').reverse().join('/');
+        infoExtra.textContent =
+          ` • Data: ${dataFormatada} • Horário(s): ${item.horarios.join(', ')}`;
+        meta.appendChild(infoExtra);
+      }
+
+      left.appendChild(title);
+      left.appendChild(meta);
+
+      const right = document.createElement('div');
+      right.classList.add('cart-item-right');
+
+      const price = document.createElement('div');
+      price.classList.add('cart-item-price');
+      price.textContent = formatarMoeda(valor);
+
+      const btnRemover = document.createElement('button');
+      btnRemover.type = 'button';
+      btnRemover.classList.add('btn-remove');
+      btnRemover.innerHTML = `<i class="bi bi-trash3"></i> Remover`;
+      btnRemover.addEventListener('click', () => removerItem(index));
+
+      right.appendChild(price);
+      right.appendChild(btnRemover);
+
+      wrapper.appendChild(left);
+      wrapper.appendChild(right);
+
+      cartItemsDiv.appendChild(wrapper);
+    });
+
+    const totalGeral = totalServicos + totalProdutos;
+
+    totalServicosSpan.textContent = formatarMoeda(totalServicos);
+    totalProdutosSpan.textContent = formatarMoeda(totalProdutos);
+    totalGeralSpan.textContent = formatarMoeda(totalGeral);
+  }
+
+  // Inicialização
+  carregarCarrinho();
+  renderizarCarrinho();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>Criar conta | Shaver Barber</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FONTES: OSWALD (títulos) + POPPINS (texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      :root {
+        --bg-dark: #020617;
+        --bg-dark-alt: #050816;
+        --accent: #00ff57;   /* verde da logo */
+        --accent-soft: #26ff7a;
+        --text-main: #f9fafb;
+        --text-soft: #9ca3af;
+        --input-bg: #020617;
+        --input-border: #1f2933;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(0,255,87,0.22) 0, transparent 55%),
+          radial-gradient(circle at bottom, rgba(0,255,87,0.18) 0, transparent 55%),
+          linear-gradient(145deg, var(--bg-dark-alt), #000);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        color: var(--text-main);
+      }
+
+      .register-wrapper {
+        width: 100%;
+        max-width: 460px;
+      }
+
+      .register-box {
+        background: rgba(2,6,23,0.96);
+        border-radius: 18px;
+        padding: 28px 24px 24px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+        border: 1px solid rgba(148,163,184,0.18);
+        backdrop-filter: blur(10px);
+      }
+
+      .brand {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+
+      .brand-logo {
+        width: 90px;
+        height: auto;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 18px rgba(0,255,87,0.55));
+      }
+
+      .brand-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .brand-title span {
+        color: var(--accent);
+        text-shadow: 0 0 14px rgba(0,255,87,0.6);
+      }
+
+      .brand-sub {
+        font-family: 'Oswald', sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-top: 2px;
+      }
+
+      .register-box h1 {
+        font-size: 1.15rem;
+        font-weight: 500;
+        margin: 12px 0 6px;
+        text-align: left;
+      }
+
+      .register-box p.desc {
+        font-size: 0.82rem;
+        color: var(--text-soft);
+        margin-bottom: 16px;
+        text-align: left;
+      }
+
+      .form-label {
+        font-size: 0.8rem;
+        color: var(--text-soft);
+        margin-bottom: 4px;
+      }
+
+      .form-control,
+      .form-select {
+        background-color: var(--input-bg);
+        border: 1px solid var(--input-border);
+        color: var(--text-main);
+        font-size: 0.9rem;
+        padding: 9px 11px;
+        border-radius: 10px;
+      }
+
+      .form-control::placeholder {
+        color: #6b7280;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.12rem rgba(0,255,87,0.25);
+        background-color: var(--input-bg);
+        color: var(--text-main);
+      }
+
+      .btn-register {
+        background: var(--accent);
+        border: none;
+        color: #000;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: 999px;
+        padding: 9px 0;
+        margin-top: 8px;
+        transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+      }
+
+      .btn-register:hover {
+        background: var(--accent-soft);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(0,255,87,0.35);
+      }
+
+      .btn-register:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      .back-link {
+        margin-top: 14px;
+        font-size: 0.8rem;
+        color: var(--text-soft);
+        text-align: center;
+      }
+
+      .back-link a {
+        text-decoration: none;
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* Campos específicos por tipo */
+      .tipo-extra {
+        display: none;
+      }
+
+      @media (min-width: 768px) {
+        .register-box {
+          padding: 32px 28px 26px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="register-wrapper">
+      <div class="register-box">
+
+        <div class="brand">
+          <img src="shavv.png" alt="Logo Shaver Barber" class="brand-logo">
+          <p class="brand-title"><span>Shaver</span> Barber</p>
+          <p class="brand-sub">BARBERSHOP</p>
+        </div>
+
+        <h1>Criar conta</h1>
+        <p class="desc">
+          Preencha seus dados para criar uma conta e acessar o Shaver Barber como cliente ou barbeiro.
+        </p>
+
+        <form id="formCadastro" onsubmit="criarConta(event)">
+          <div class="mb-2">
+            <label for="nome" class="form-label">Nome completo</label>
+            <input
+              type="text"
+              id="nome"
+              class="form-control"
+              placeholder="Seu nome"
+              required
+            >
+          </div>
+
+          <div class="mb-2">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              placeholder="seuemail@exemplo.com"
+              required
+            >
+          </div>
+
+          <div class="mb-2">
+            <label for="telefone" class="form-label">Telefone (WhatsApp)</label>
+            <input
+              type="tel"
+              id="telefone"
+              class="form-control"
+              placeholder="(00) 00000-0000"
+            >
+          </div>
+
+          <div class="mb-2">
+            <label for="tipoAcesso" class="form-label">Tipo de acesso</label>
+            <select id="tipoAcesso" class="form-select" required>
+              <option value="">Selecione</option>
+              <option value="cliente">Cliente</option>
+              <option value="barbeiro">Barbeiro</option>
+            </select>
+          </div>
+
+          <!-- Campos específicos para CLIENTE -->
+          <div id="campos-cliente" class="tipo-extra mb-2">
+            <label for="cpfCliente" class="form-label">CPF (cliente)</label>
+            <input
+              type="text"
+              id="cpfCliente"
+              class="form-control"
+              placeholder="000.000.000-00"
+            >
+          </div>
+
+          <!-- Campos específicos para BARBEIRO -->
+          <div id="campos-barbeiro" class="tipo-extra mb-2">
+            <label for="codigoBarbeiro" class="form-label">Código do barbeiro</label>
+            <input
+              type="text"
+              id="codigoBarbeiro"
+              class="form-control"
+              placeholder="Código interno fornecido pela barbearia"
+            >
+          </div>
+
+          <div class="mb-2">
+            <label for="senha" class="form-label">Senha</label>
+            <input
+              type="password"
+              id="senha"
+              class="form-control"
+              placeholder="Crie uma senha"
+              required
+            >
+          </div>
+
+          <div class="mb-2">
+            <label for="confirmarSenha" class="form-label">Confirmar senha</label>
+            <input
+              type="password"
+              id="confirmarSenha"
+              class="form-control"
+              placeholder="Repita a senha"
+              required
+            >
+          </div>
+
+          <button type="submit" class="btn btn-register w-100">
+            Criar conta
+          </button>
+        </form>
+
+        <div class="back-link">
+          <p class="mb-0">
+            Já tem conta? <a href="login.html">Entrar</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      const tipoSelect = document.getElementById('tipoAcesso');
+      const camposCliente = document.getElementById('campos-cliente');
+      const camposBarbeiro = document.getElementById('campos-barbeiro');
+      const cpfCliente = document.getElementById('cpfCliente');
+      const codigoBarbeiro = document.getElementById('codigoBarbeiro');
+
+      tipoSelect.addEventListener('change', function () {
+        const tipo = this.value;
+
+        // Reseta visibilidade e required
+        camposCliente.style.display = 'none';
+        camposBarbeiro.style.display = 'none';
+        cpfCliente.required = false;
+        codigoBarbeiro.required = false;
+
+        if (tipo === 'cliente') {
+          camposCliente.style.display = 'block';
+          cpfCliente.required = true;
+        } else if (tipo === 'barbeiro') {
+          camposBarbeiro.style.display = 'block';
+          codigoBarbeiro.required = true;
+        }
+      });
+
+      function criarConta(e) {
+        e.preventDefault();
+
+        const nome = document.getElementById("nome").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value;
+        const confirmarSenha = document.getElementById("confirmarSenha").value;
+        const tipo = document.getElementById("tipoAcesso").value;
+
+        if (!nome || !email || !senha || !confirmarSenha || !tipo) {
+          alert("Preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        if (senha.length < 6) {
+          alert("A senha deve ter pelo menos 6 caracteres.");
+          return;
+        }
+
+        if (senha !== confirmarSenha) {
+          alert("As senhas não conferem.");
+          return;
+        }
+
+        if (tipo === "cliente") {
+          if (!cpfCliente.value.trim()) {
+            alert("Informe o CPF do cliente.");
+            return;
+          }
+        }
+
+        if (tipo === "barbeiro") {
+          if (!codigoBarbeiro.value.trim()) {
+            alert("Informe o código do barbeiro.");
+            return;
+          }
+        }
+
+        // Simulação de cadastro para a atividade:
+        if (tipo === "cliente") {
+          alert("Conta de cliente criada com sucesso! Agora você já pode fazer login.");
+        } else {
+          alert("Conta de barbeiro criada com sucesso! Agora você já pode fazer login.");
+        }
+
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+</html>

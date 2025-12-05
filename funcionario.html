@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Área do Barbeiro | Shaver Barber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- BOOTSTRAP ICONS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- FONTES: OSWALD (títulos) + POPPINS (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-dark-alt: #050816;
+      --accent: #00ff57;
+      --accent-soft: #26ff7a;
+      --text-main: #f9fafb;
+      --text-soft: #e5e7eb;
+      --card-bg: rgba(15,23,42,0.98);
+      --border-soft: rgba(148,163,184,0.2);
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(0,255,87,0.2) 0, transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,255,87,0.15) 0, transparent 55%),
+        linear-gradient(145deg, var(--bg-dark-alt), #000);
+      color: var(--text-main);
+    }
+
+    .barbeiro-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOPO */
+    .topo-barbeiro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.25);
+      background: radial-gradient(circle at top left, rgba(0,255,87,0.12), transparent 40%),
+                  rgba(2,6,23,0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .topo-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topo-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0,255,87,0.45));
+    }
+
+    .topo-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .topo-title span.app-name {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .topo-title span.app-name strong {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(0,255,87,0.6);
+    }
+
+    .topo-title span.section {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .topo-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .barber-info {
+      text-align: right;
+      font-size: 0.76rem;
+      color: var(--text-soft);
+    }
+
+    .barber-info strong {
+      color: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    .btn-sair {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-sair:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* BOTÃO SACOLA */
+    .btn-cart {
+      position: relative;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-cart i {
+      font-size: 1.1rem;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: #000;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      padding: 0 5px;
+      min-width: 16px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    .layout-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 992px) {
+      .layout-grid {
+        grid-template-columns: 2fr 1.4fr;
+        align-items: flex-start;
+      }
+    }
+
+    .card-section {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      padding: 16px 14px 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.96rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .card-title i {
+      font-size: 1.1rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .tag-status {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag-status span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    /* Lista de agendamentos */
+    .agenda-lista {
+      max-height: 360px;
+      overflow-y: auto;
+      margin-top: 4px;
+    }
+
+    .agenda-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.96);
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .agenda-left {
+      flex: 1;
+    }
+
+    .agenda-hora {
+      font-weight: 600;
+      color: var(--accent-soft);
+      margin-bottom: 2px;
+    }
+
+    .agenda-descricao {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .agenda-extra {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .agenda-right {
+      text-align: right;
+      min-width: 120px;
+    }
+
+    .agenda-preco {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+    }
+
+    .agenda-preco-detalhe {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .badge-status {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      padding: 1px 8px;
+      font-size: 0.7rem;
+      margin-top: 3px;
+    }
+
+    .badge-pendente {
+      color: #fbbf24;
+      border-color: rgba(251,191,36,0.8);
+    }
+
+    .btn-concluir {
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .btn-concluir i {
+      font-size: 0.9rem;
+    }
+
+    /* Próximo cliente */
+    .next-client-card {
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.55);
+      padding: 10px 12px;
+      background: radial-gradient(circle at top, rgba(0,255,87,0.16), transparent 60%);
+      font-size: 0.82rem;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .next-client-hora {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+      margin-bottom: 2px;
+    }
+
+    .next-client-nome {
+      font-weight: 500;
+    }
+
+    .next-client-info {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    /* Resumo financeiro */
+    .kpis-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    @media (min-width: 576px) {
+      .kpis-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .kpi-card {
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 8px 10px;
+      background: rgba(15,23,42,0.96);
+      font-size: 0.8rem;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-bottom: 2px;
+    }
+
+    .kpi-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+    }
+
+    .kpi-hint {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .info-lembrete {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-top: 10px;
+    }
+
+    .info-lembrete strong {
+      color: var(--accent-soft);
+    }
+
+    /* Select cliente */
+    .cliente-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .cliente-helper {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+      margin-bottom: 6px;
+    }
+
+    .form-select-dark {
+      background-color: #020617;
+      border: 1px solid #1f2937;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      padding: 6px 8px;
+      border-radius: 10px;
+    }
+
+    .form-select-dark:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0.12rem rgba(0,255,87,0.25);
+      background-color: #020617;
+      color: var(--text-main);
+    }
+
+    /* Consumos quick add */
+    .consumos-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (min-width: 576px) {
+      .consumos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .consumo-card {
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(15,23,42,0.96);
+      padding: 7px 9px;
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .consumo-titulo {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .consumo-info {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+    }
+
+    .consumo-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      gap: 6px;
+    }
+
+    .consumo-preco {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+    }
+
+    .btn-add-consumo {
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .btn-add-consumo i {
+      font-size: 0.9rem;
+    }
+
+    .consumos-grupo-titulo {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .toast-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      background: rgba(15,23,42,0.98);
+      color: var(--text-main);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(148,163,184,0.5);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 9999;
+    }
+
+    .toast-bar i {
+      color: var(--accent-soft);
+    }
+  </style>
+</head>
+
+<body>
+<div class="barbeiro-page">
+
+  <!-- TOPO -->
+  <header class="topo-barbeiro">
+    <div class="topo-left">
+      <img src="shavv.png" alt="Logo Shaver Barber" class="topo-logo">
+      <div class="topo-title">
+        <span class="app-name"><strong>Shaver</strong> Barber</span>
+      </div>
+    </div>
+
+    <div class="topo-right">
+      <div class="barber-info">
+        <div>Logado como</div>
+        <div><strong>Claudivan Junior</strong></div>
+      </div>
+
+      <button class="btn-sair" onclick="window.location.href='login.html'">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Sair</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main>
+    <div class="layout-grid">
+
+      <!-- COLUNA ESQUERDA - Agenda do dia -->
+      <section class="card-section">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="bi bi-calendar-day"></i>
+            <span>Agenda de hoje</span>
+          </div>
+          <div class="tag-status">
+            <span class="dot"></span>
+            <span id="tagHoje">Hoje: 0 atendimento(s) pendente(s)</span>
+          </div>
+        </div>
+        <p class="card-subtitle">
+          Visualize seus horários de hoje, lance consumos para o cliente e finalize a conta quando o serviço terminar.
+        </p>
+
+        <div id="listaAgenda" class="agenda-lista">
+          <!-- preenchido via JS -->
+        </div>
+      </section>
+
+      <!-- COLUNA DIREITA - Próximo cliente + financeiro + consumos -->
+      <section class="card-section">
+        <!-- Próximo cliente -->
+        <div class="card-header">
+          <div class="card-title">
+            <i class="bi bi-person-lines-fill"></i>
+            <span>Próximo cliente</span>
+          </div>
+        </div>
+        <div id="cardProximoCliente" class="next-client-card">
+          <div class="next-client-hora">Sem agendamentos hoje.</div>
+          <div class="next-client-info">
+            Assim que tiver um atendimento marcado para hoje, ele aparece aqui.
+          </div>
+        </div>
+
+        <!-- Resumo financeiro -->
+        <div class="card-header mt-2">
+          <div class="card-title">
+            <i class="bi bi-graph-up-arrow"></i>
+            <span>Resumo financeiro do mês</span>
+          </div>
+        </div>
+        <p class="card-subtitle">
+          Baseado nos atendimentos finalizados pelo barbeiro (serviços + consumos lançados).
+        </p>
+
+        <div class="kpis-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Faturamento bruto do mês</div>
+            <div id="kpiBruto" class="kpi-value">R$ 0,00</div>
+            <div class="kpi-hint">Serviços concluídos + consumos dos clientes.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Lucro do barbeiro (50%)</div>
+            <div id="kpiLucro" class="kpi-value">R$ 0,00</div>
+            <div class="kpi-hint">Estimativa sobre o faturamento bruto.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Atendimentos concluídos</div>
+            <div id="kpiConcluidos" class="kpi-value">0</div>
+            <div class="kpi-hint">Quantidade de serviços finalizados.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Atendimentos do mês (simulação)</div>
+            <div id="kpiTotalMes" class="kpi-value">0</div>
+            <div class="kpi-hint">Concluídos + pendentes de hoje.</div>
+          </div>
+        </div>
+
+        <p class="info-lembrete">
+          <i class="bi bi-bell"></i>
+          Você receberá um lembrete no app cerca de <strong>10 minutos antes</strong> de cada procedimento
+          (nesta atividade isso é apenas uma simulação, exibida aqui como regra de negócio).
+        </p>
+
+        <!-- Adicionar consumos ao carrinho -->
+        <div class="card-header mt-3">
+          <div class="card-title">
+            <i class="bi bi-bag-plus"></i>
+            <span>Adicionar consumos ao carrinho do cliente</span>
+          </div>
+        </div>
+        <p class="card-subtitle">
+          Selecione um cliente da sua agenda de hoje e lance bebidas, snacks ou produtos de barbearia.
+          Tudo é somado ao valor que ele pagará ao final do corte.
+        </p>
+
+        <!-- Seleção de cliente -->
+        <label for="clienteConsumoSelect" class="cliente-label">Cliente para lançamento</label>
+        <select id="clienteConsumoSelect" class="form-select-dark w-100 mb-1">
+          <option value="">Selecione um cliente da agenda de hoje</option>
+        </select>
+        <div class="cliente-helper">
+          Os lançamentos abaixo serão vinculados a este cliente no carrinho.
+        </div>
+        <div id="resumoClienteSelecionado" class="cliente-helper" style="margin-top:4px;">
+          Selecione um cliente para ver o total estimado.
+        </div>
+
+        <button type="button" class="btn btn-outline-light w-100 mt-2" onclick="abrirCheckoutSelecionado()">
+          <i class="bi bi-cash-coin"></i> Finalizar conta do cliente
+        </button>
+        <div class="cliente-helper">
+          Simula o fechamento da conta (serviço + consumos), limpa o carrinho desse cliente e atualiza o resumo financeiro.
+        </div>
+
+        <!-- Grupo 1: Bebidas & snacks -->
+        <div class="consumos-grupo-titulo">
+          <i class="bi bi-cup-straw"></i> Bebidas & snacks
+        </div>
+        <div class="consumos-grid">
+          <!-- Refrigerante -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Refrigerante lata 350ml</div>
+            <div class="consumo-info">Cola / guaraná / laranja • bem gelado</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 6,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Refrigerante lata 350ml"
+                data-valor="6.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Cerveja -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Cerveja long neck</div>
+            <div class="consumo-info">Somente para maiores de 18 • bem gelada</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 10,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Cerveja long neck"
+                data-valor="10.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Água -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Água mineral 500ml</div>
+            <div class="consumo-info">Sem gás • opção leve</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 4,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Água mineral 500ml"
+                data-valor="4.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Energético -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Energético lata</div>
+            <div class="consumo-info">Para quem chega direto do trabalho</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 12,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Energético lata"
+                data-valor="12.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Salgadinho -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Salgadinho gourmet</div>
+            <div class="consumo-info">Sabores variados • pacote individual</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 7,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Salgadinho gourmet"
+                data-valor="7.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Batata chips -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Batata chips individual</div>
+            <div class="consumo-info">Lata/pacote • acompanha bem a bebida</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 8,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Batata chips individual"
+                data-valor="8.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Café -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Café expresso</div>
+            <div class="consumo-info">Curto ou longo • no capricho</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 6,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Café expresso"
+                data-valor="6.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grupo 2: Produtos de barbearia -->
+        <div class="consumos-grupo-titulo">
+          <i class="bi bi-scissors"></i> Produtos de barbearia (Fox)
+        </div>
+        <div class="consumos-grid">
+          <!-- Pomada Efeito Molhado -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Pomada Efeito Molhado</div>
+            <div class="consumo-info">Fox For Men • brilho molhado e fixação média</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 28,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Pomada Efeito Molhado (Fox)"
+                data-valor="28.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Pomada Efeito Seco -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Pomada Efeito Seco</div>
+            <div class="consumo-info">Fox For Men • acabamento fosco</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 25,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Pomada Efeito Seco (Fox)"
+                data-valor="25.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Pomada Efeito Mate -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Pomada Efeito Mate</div>
+            <div class="consumo-info">Fox For Men • visual natural sem brilho</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 25,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Pomada Efeito Mate (Fox)"
+                data-valor="25.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Balm para barba -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Balm para a barba 120ml</div>
+            <div class="consumo-info">Fox For Men • hidrata e reduz irritações</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 35,00</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Balm para a barba 120ml (Fox)"
+                data-valor="35.00"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Shampoo -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Shampoo 4 em 1 240ml</div>
+            <div class="consumo-info">Fox For Men • cabelo, barba e corpo</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 20,90</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Shampoo 4 em 1 240ml (Fox)"
+                data-valor="20.90"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+
+          <!-- Condicionador -->
+          <div class="consumo-card">
+            <div class="consumo-titulo">Condicionador IceFresh 240ml</div>
+            <div class="consumo-info">Fox For Men • sensação refrescante</div>
+            <div class="consumo-footer">
+              <span class="consumo-preco">R$ 16,90</span>
+              <button
+                type="button"
+                class="btn-add-consumo"
+                data-produto="Condicionador IceFresh 240ml (Fox)"
+                data-valor="16.90"
+              >
+                <i class="bi bi-plus-lg"></i> Lançar
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODAL CHECKOUT RÁPIDO -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background:#020617; color:#f9fafb; border-radius:16px; border:1px solid rgba(148,163,184,0.4);">
+      <div class="modal-header border-0">
+        <h5 class="modal-title d-flex align-items-center gap-2">
+          <i class="bi bi-cash-coin"></i> Finalizar conta
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body pt-0">
+        <p class="mb-1" style="font-size:0.8rem; color:#e5e7eb;">
+          Cliente: <strong id="checkoutClienteNome"></strong>
+        </p>
+        <p class="mb-2" style="font-size:0.74rem; color:#9ca3af;">
+          Confira serviços e consumos antes de confirmar o pagamento (simulação).
+        </p>
+
+        <div class="mb-2">
+          <div style="font-size:0.78rem; font-weight:500; margin-bottom:2px;">Serviços de hoje</div>
+          <div id="checkoutListaServicos" style="font-size:0.76rem; color:#e5e7eb;"></div>
+        </div>
+
+        <div class="mb-2">
+          <div style="font-size:0.78rem; font-weight:500; margin-bottom:2px;">Consumos no salão</div>
+          <div id="checkoutListaConsumos" style="font-size:0.76rem; color:#e5e7eb;"></div>
+        </div>
+
+        <div class="border-top pt-2 mt-2" style="font-size:0.78rem;">
+          <div class="d-flex justify-content-between">
+            <span>Total serviços</span>
+            <strong id="checkoutTotalServicos">R$ 0,00</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Total consumos</span>
+            <strong id="checkoutTotalConsumos">R$ 0,00</strong>
+          </div>
+          <div class="d-flex justify-content-between mt-1">
+            <span>Sinal (50% – simulado)</span>
+            <span id="checkoutSinal">R$ 0,00</span>
+          </div>
+          <div class="d-flex justify-content-between mt-1">
+            <span>Restante no caixa</span>
+            <span id="checkoutRestante">R$ 0,00</span>
+          </div>
+          <div class="d-flex justify-content-between mt-2" style="font-size:0.86rem;">
+            <strong>Total final</strong>
+            <strong id="checkoutTotal">R$ 0,00</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-light btn-sm px-3" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-success btn-sm px-3" id="btnConfirmarCheckout">
+          Confirmar pagamento
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toastBar" class="toast-bar">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastText">Ação realizada.</span>
+</div>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const COMISSAO_BARBEIRO = 0.5;
+  const STORAGE_KEY = 'shaver_cart_items';
+
+  // Simulação de agenda do barbeiro João Santos
+  let agendaHoje = [
+    {
+      hora: '09:00',
+      cliente: 'Carlos Henrique',
+      servico: 'Corte masculino',
+      duracaoMin: 30,
+      valor: 40,
+      status: 'pendente'
+    },
+    {
+      hora: '10:00',
+      cliente: 'Marcos Silva',
+      servico: 'Corte + Barba (Combo)',
+      duracaoMin: 60,
+      valor: 70,
+      status: 'pendente'
+    },
+    {
+      hora: '15:30',
+      cliente: 'Felipe Souza',
+      servico: 'Barba',
+      duracaoMin: 30,
+      valor: 35,
+      status: 'pendente'
+    },
+    {
+      hora: '19:00',
+      cliente: 'Rafael Lima',
+      servico: 'Corte masculino',
+      duracaoMin: 30,
+      valor: 40,
+      status: 'pendente'
+    }
+  ];
+
+  // Registros financeiros após finalizar conta
+  let registrosFinanceiros = [];
+  let clienteEmCheckout = null;
+  let resumoCheckoutAtual = null;
+
+  const tagHoje = document.getElementById('tagHoje');
+  const listaAgenda = document.getElementById('listaAgenda');
+  const cardProximoCliente = document.getElementById('cardProximoCliente');
+
+  const kpiBruto = document.getElementById('kpiBruto');
+  const kpiLucro = document.getElementById('kpiLucro');
+  const kpiConcluidos = document.getElementById('kpiConcluidos');
+  const kpiTotalMes = document.getElementById('kpiTotalMes');
+
+  const toastBar = document.getElementById('toastBar');
+  const toastText = document.getElementById('toastText');
+
+  const cartCountSpan = document.getElementById('cartCount');
+  const clienteConsumoSelect = document.getElementById('clienteConsumoSelect');
+  const resumoClienteSelecionado = document.getElementById('resumoClienteSelecionado');
+
+  function formatarMoeda(valor) {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+  }
+
+  function mostrarToast(mensagem) {
+    toastText.textContent = mensagem;
+    toastBar.style.display = 'flex';
+    setTimeout(() => {
+      toastBar.style.display = 'none';
+    }, 1600);
+  }
+
+  // --------- CARRINHO (mesmo storage do resto do app) ----------
+
+  function obterQuantidadeCarrinho() {
+    try {
+      const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return Array.isArray(arr) ? arr.length : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function atualizarBadgeCarrinho() {
+    if (!cartCountSpan) return;
+    cartCountSpan.textContent = obterQuantidadeCarrinho();
+  }
+
+  function adicionarItemCarrinho(item) {
+    const atual = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    atual.push(item);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(atual));
+    atualizarBadgeCarrinho();
+  }
+
+  // --------- SOMAS POR CLIENTE (serviços + consumos) ----------
+
+  function obterSomasCliente(nomeCliente) {
+    if (!nomeCliente) {
+      return { totalServicos: 0, totalConsumos: 0, totalGeral: 0 };
+    }
+
+    // Serviços desse cliente (todos da agenda, independente do status)
+    const servicosCliente = agendaHoje.filter(a => a.cliente === nomeCliente);
+    const totalServicos = servicosCliente.reduce(
+      (acc, a) => acc + Number(a.valor || 0),
+      0
+    );
+
+    // Consumos no carrinho para esse cliente
+    let totalConsumos = 0;
+    try {
+      const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (Array.isArray(arr)) {
+        totalConsumos = arr
+          .filter(i => i.cliente === nomeCliente)
+          .reduce((acc, i) => acc + Number(i.valor || 0), 0);
+      }
+    } catch (e) {}
+
+    return {
+      totalServicos,
+      totalConsumos,
+      totalGeral: totalServicos + totalConsumos
+    };
+  }
+
+  function calcularTotalCliente(nomeCliente) {
+    if (!nomeCliente) {
+      if (resumoClienteSelecionado) {
+        resumoClienteSelecionado.innerHTML = 'Selecione um cliente para ver o total estimado.';
+      }
+      return;
+    }
+
+    const somas = obterSomasCliente(nomeCliente);
+    const totalServicos = somas.totalServicos;
+    const totalConsumos = somas.totalConsumos;
+    const total = somas.totalGeral;
+
+    if (resumoClienteSelecionado) {
+      resumoClienteSelecionado.innerHTML =
+        `Total estimado para este cliente hoje: <strong>${formatarMoeda(total)}</strong> ` +
+        `<span style="opacity:.8;">(Serviços: ${formatarMoeda(totalServicos)} + Consumos: ${formatarMoeda(totalConsumos)})</span>`;
+    }
+  }
+
+  // --------- FINANCEIRO / AGENDA ----------
+
+  function atualizarResumoFinanceiro() {
+    const bruto = registrosFinanceiros.reduce(
+      (acc, r) => acc + Number(r.total || 0),
+      0
+    );
+    const concluidos = registrosFinanceiros.reduce(
+      (acc, r) => acc + Number(r.qtdServicos || 0),
+      0
+    );
+    const pendentes = agendaHoje.filter(a => a.status === 'pendente').length;
+
+    kpiBruto.textContent = formatarMoeda(bruto);
+    kpiLucro.textContent = formatarMoeda(bruto * COMISSAO_BARBEIRO);
+    kpiConcluidos.textContent = concluidos;
+    kpiTotalMes.textContent = concluidos + pendentes;
+  }
+
+  function atualizarTagHoje() {
+    const pendentes = agendaHoje.filter(a => a.status === 'pendente').length;
+    tagHoje.textContent = `Hoje: ${pendentes} atendimento(s) pendente(s)`;
+  }
+
+  function atualizarProximoCliente() {
+    const pendentesOrdenados = agendaHoje
+      .filter(a => a.status === 'pendente')
+      .sort((a, b) => a.hora.localeCompare(b.hora));
+
+    if (pendentesOrdenados.length === 0) {
+      cardProximoCliente.innerHTML = `
+        <div class="next-client-hora">Sem agendamentos pendentes hoje.</div>
+        <div class="next-client-info">
+          Quando houver um próximo cliente, ele aparece aqui com hora, serviço e observação de lembrete 10 minutos antes.
+        </div>
+      `;
+      return;
+    }
+
+    const prox = pendentesOrdenados[0];
+    cardProximoCliente.innerHTML = `
+      <div class="next-client-hora">${prox.hora} • ${prox.servico}</div>
+      <div class="next-client-nome">Cliente: ${prox.cliente}</div>
+      <div class="next-client-info">
+        Duração aproximada: ${prox.duracaoMin} min • Valor do serviço: ${formatarMoeda(prox.valor)}<br>
+        <strong>Regra do app:</strong> você receberá um lembrete em torno de 10 minutos antes desse horário.
+      </div>
+    `;
+  }
+
+  // botão "Concluir" ao lado do horário -> abre o checkout daquele cliente
+  function marcarComoConcluido(index) {
+    const ag = agendaHoje[index];
+    if (!ag) return;
+    abrirCheckoutPorCliente(ag.cliente);
+  }
+
+  function renderizarAgenda() {
+    listaAgenda.innerHTML = '';
+
+    const pendentes = agendaHoje.filter(a => a.status === 'pendente');
+
+    if (pendentes.length === 0) {
+      listaAgenda.innerHTML = `
+        <div class="text-center mt-3" style="font-size: 0.85rem; color: var(--text-soft);">
+          Nenhum atendimento pendente para hoje (simulação).
+        </div>
+      `;
+    } else {
+      agendaHoje.forEach((ag, idx) => {
+        if (ag.status !== 'pendente') return;
+
+        const item = document.createElement('div');
+        item.classList.add('agenda-item');
+
+        const left = document.createElement('div');
+        left.classList.add('agenda-left');
+
+        const hora = document.createElement('div');
+        hora.classList.add('agenda-hora');
+        hora.textContent = ag.hora;
+
+        const desc = document.createElement('div');
+        desc.classList.add('agenda-descricao');
+        desc.textContent = `${ag.servico} • ${ag.cliente}`;
+
+        const extra = document.createElement('div');
+        extra.classList.add('agenda-extra');
+        extra.textContent = `Duração estimada: ${ag.duracaoMin} min`;
+
+        left.appendChild(hora);
+        left.appendChild(desc);
+        left.appendChild(extra);
+
+        const right = document.createElement('div');
+        right.classList.add('agenda-right');
+
+        const somasCliente = obterSomasCliente(ag.cliente);
+        const precoTotalCliente = somasCliente.totalGeral || Number(ag.valor || 0);
+
+        const preco = document.createElement('div');
+        preco.classList.add('agenda-preco');
+        preco.textContent = formatarMoeda(precoTotalCliente);
+
+        const detalhe = document.createElement('div');
+        detalhe.classList.add('agenda-preco-detalhe');
+        detalhe.textContent =
+          `Serviço: ${formatarMoeda(Number(ag.valor || 0))} • Consumos: ${formatarMoeda(somasCliente.totalConsumos)}`;
+
+        const badge = document.createElement('div');
+        badge.classList.add('badge-status', 'badge-pendente');
+        badge.textContent = 'Pendente';
+
+        right.appendChild(preco);
+        right.appendChild(detalhe);
+        right.appendChild(badge);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.classList.add('btn-concluir');
+        btn.innerHTML = `<i class="bi bi-check2"></i> Concluir`;
+        btn.addEventListener('click', () => marcarComoConcluido(idx));
+        right.appendChild(btn);
+
+        item.appendChild(left);
+        item.appendChild(right);
+        listaAgenda.appendChild(item);
+      });
+    }
+
+    atualizarTagHoje();
+    atualizarProximoCliente();
+    atualizarResumoFinanceiro();
+    preencherSelectClientes();
+  }
+
+  // --------- CLIENTE PARA LANÇAMENTO ----------
+
+  function preencherSelectClientes() {
+    if (!clienteConsumoSelect) return;
+
+    const selecionadoAtual = clienteConsumoSelect.value;
+
+    const clientesUnicos = Array.from(
+      new Set(
+        agendaHoje
+          .filter(a => a.status === 'pendente')
+          .map(a => a.cliente)
+      )
+    );
+
+    clienteConsumoSelect.innerHTML = `
+      <option value="">Selecione um cliente da agenda de hoje</option>
+    `;
+
+    clientesUnicos.forEach(nome => {
+      const opt = document.createElement('option');
+      opt.value = nome;
+      opt.textContent = nome;
+      clienteConsumoSelect.appendChild(opt);
+    });
+
+    if (selecionadoAtual && clientesUnicos.includes(selecionadoAtual)) {
+      clienteConsumoSelect.value = selecionadoAtual;
+    } else {
+      const pendente = agendaHoje
+        .filter(a => a.status === 'pendente')
+        .sort((a, b) => a.hora.localeCompare(b.hora))[0];
+      if (pendente) {
+        clienteConsumoSelect.value = pendente.cliente;
+      }
+    }
+
+    calcularTotalCliente(clienteConsumoSelect.value);
+  }
+
+  if (clienteConsumoSelect) {
+    clienteConsumoSelect.addEventListener('change', () => {
+      calcularTotalCliente(clienteConsumoSelect.value);
+    });
+  }
+
+  // --------- CHECKOUT RÁPIDO (modal) ----------
+
+  function prepararResumoCheckout(nomeCliente) {
+    clienteEmCheckout = nomeCliente;
+
+    document.getElementById('checkoutClienteNome').textContent = nomeCliente;
+
+    const servicos = agendaHoje.filter(a => a.cliente === nomeCliente);
+    let listaServicosHtml = '';
+    let totalServicos = 0;
+
+    if (servicos.length === 0) {
+      listaServicosHtml = '<div class="text-muted" style="font-size:0.74rem;">Nenhum serviço encontrado para hoje.</div>';
+    } else {
+      servicos.forEach(s => {
+        const v = Number(s.valor || 0);
+        totalServicos += v;
+        listaServicosHtml += `
+          <div class="d-flex justify-content-between">
+            <span>${s.hora} • ${s.servico}</span>
+            <span>${formatarMoeda(v)}</span>
+          </div>
+        `;
+      });
+    }
+    document.getElementById('checkoutListaServicos').innerHTML = listaServicosHtml;
+
+    let itens = [];
+    try {
+      const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (Array.isArray(arr)) {
+        itens = arr.filter(i => i.cliente === nomeCliente);
+      }
+    } catch (e) {}
+
+    let totalConsumos = 0;
+    let listaConsHtml = '';
+
+    if (itens.length === 0) {
+      listaConsHtml = '<div class="text-muted" style="font-size:0.74rem;">Nenhum consumo lançado.</div>';
+    } else {
+      itens.forEach(i => {
+        const v = Number(i.valor || 0);
+        totalConsumos += v;
+        listaConsHtml += `
+          <div class="d-flex justify-content-between">
+            <span>${i.descricao}</span>
+            <span>${formatarMoeda(v)}</span>
+          </div>
+        `;
+      });
+    }
+    document.getElementById('checkoutListaConsumos').innerHTML = listaConsHtml;
+
+    const total = totalServicos + totalConsumos;
+    const sinal = total * 0.5;
+    const restante = total - sinal;
+
+    document.getElementById('checkoutTotalServicos').textContent = formatarMoeda(totalServicos);
+    document.getElementById('checkoutTotalConsumos').textContent = formatarMoeda(totalConsumos);
+    document.getElementById('checkoutSinal').textContent = formatarMoeda(sinal);
+    document.getElementById('checkoutRestante').textContent = formatarMoeda(restante);
+    document.getElementById('checkoutTotal').textContent = formatarMoeda(total);
+
+    resumoCheckoutAtual = {
+      qtdServicos: servicos.length,
+      totalServicos,
+      totalConsumos,
+      total
+    };
+  }
+
+  function abrirCheckoutSelecionado() {
+    const nome = clienteConsumoSelect.value;
+    if (!nome) {
+      alert('Selecione um cliente da agenda para finalizar a conta.');
+      return;
+    }
+
+    prepararResumoCheckout(nome);
+    const modal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+    modal.show();
+  }
+
+  function abrirCheckoutPorCliente(nomeCliente) {
+    if (clienteConsumoSelect) {
+      clienteConsumoSelect.value = nomeCliente;
+      calcularTotalCliente(nomeCliente);
+    }
+    prepararResumoCheckout(nomeCliente);
+    const modal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+    modal.show();
+  }
+
+  function confirmarCheckoutAtual() {
+    if (!clienteEmCheckout || !resumoCheckoutAtual) return;
+
+    // registra no financeiro
+    registrosFinanceiros.push({
+      cliente: clienteEmCheckout,
+      qtdServicos: resumoCheckoutAtual.qtdServicos,
+      valorServicos: resumoCheckoutAtual.totalServicos,
+      valorConsumos: resumoCheckoutAtual.totalConsumos,
+      total: resumoCheckoutAtual.total,
+      pagoEm: new Date().toISOString()
+    });
+
+    // marca serviços do cliente como concluídos
+    agendaHoje.forEach(a => {
+      if (a.cliente === clienteEmCheckout) {
+        a.status = 'concluido';
+      }
+    });
+
+    // remove consumos do cliente do carrinho
+    try {
+      const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const filtrado = Array.isArray(arr)
+        ? arr.filter(i => i.cliente !== clienteEmCheckout)
+        : [];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(filtrado));
+    } catch (e) {}
+
+    const nome = clienteEmCheckout;
+    clienteEmCheckout = null;
+    resumoCheckoutAtual = null;
+
+    atualizarBadgeCarrinho();
+    renderizarAgenda();
+    calcularTotalCliente(clienteConsumoSelect.value);
+    atualizarResumoFinanceiro();
+
+    const modalEl = document.getElementById('checkoutModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    if (modalInstance) {
+      modalInstance.hide();
+    }
+
+    mostrarToast(`Conta de ${nome} finalizada (simulação).`);
+  }
+
+  document.getElementById('btnConfirmarCheckout').addEventListener('click', confirmarCheckoutAtual);
+
+  // --------- EVENTOS: CONSUMOS ----------
+
+  function configurarConsumos() {
+    document.querySelectorAll('.btn-add-consumo').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const clienteNome = clienteConsumoSelect.value;
+
+        if (!clienteNome) {
+          alert('Selecione um cliente da agenda para lançar o consumo.');
+          return;
+        }
+
+        const nomeProduto = btn.dataset.produto || 'Consumo';
+        const valor = Number(btn.dataset.valor || '0');
+
+        const itemCarrinho = {
+          tipo: 'produto-consumo',
+          descricao: nomeProduto,
+          valor: valor,
+          origem: 'barbeiro',
+          cliente: clienteNome,
+          criadoEm: new Date().toISOString()
+        };
+
+        adicionarItemCarrinho(itemCarrinho);
+        calcularTotalCliente(clienteNome);
+        renderizarAgenda();
+        mostrarToast(`${nomeProduto} lançado no carrinho de ${clienteNome} (simulação).`);
+      });
+    });
+  }
+
+  // Inicialização
+  renderizarAgenda();
+  configurarConsumos();
+  atualizarBadgeCarrinho();
+  calcularTotalCliente(clienteConsumoSelect.value);
+</script>
+
+</body>
+</html>

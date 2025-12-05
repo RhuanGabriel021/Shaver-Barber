@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Área do Cliente | Shaver Barber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- BOOTSTRAP ICONS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- FONTES: OSWALD (títulos) + POPPINS (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-dark-alt: #050816;
+      --accent: #00ff57;
+      --accent-soft: #26ff7a;
+      --text-main: #f9fafb;
+      --text-soft: #e5e7eb;
+      --card-bg: rgba(15,23,42,0.98);
+      --border-soft: rgba(148,163,184,0.2);
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(0,255,87,0.2) 0, transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,255,87,0.15) 0, transparent 55%),
+        linear-gradient(145deg, var(--bg-dark-alt), #000);
+      color: var(--text-main);
+    }
+
+    .cliente-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOPO */
+    .topo-cliente {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.25);
+      background: radial-gradient(circle at top left, rgba(0,255,87,0.12), transparent 40%),
+                  rgba(2,6,23,0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .topo-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topo-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0,255,87,0.45));
+    }
+
+    .topo-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .topo-title span.app-name {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .topo-title span.app-name strong {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(0,255,87,0.6);
+    }
+
+    .topo-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-sair {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-sair:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-cart {
+      position: relative;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-cart i {
+      font-size: 1.1rem;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: #000;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      padding: 0 5px;
+      min-width: 16px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    .layout-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 992px) {
+      .layout-grid {
+        grid-template-columns: 2fr 1.4fr;
+        align-items: flex-start;
+      }
+    }
+
+    .card-section {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      padding: 16px 14px 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      color: var(--text-main);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .card-title .icon {
+      font-size: 1.1rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .next-appointment {
+      background: rgba(15,23,42,0.95);
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.3);
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      color: var(--text-main);
+    }
+
+    .next-appointment strong {
+      color: var(--accent-soft);
+    }
+
+    .tag-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      border: 1px solid rgba(148,163,184,0.4);
+      color: var(--text-soft);
+    }
+
+    .tag-status span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .step-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .helper-text {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    .form-control-dark,
+    .form-select-dark {
+      background-color: #020617;
+      border: 1px solid #1f2937;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      padding: 7px 9px;
+      border-radius: 10px;
+    }
+
+    .form-control-dark::placeholder {
+      color: var(--text-soft);
+    }
+
+    .form-control-dark:focus,
+    .form-select-dark:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0.12rem rgba(0,255,87,0.25);
+      background-color: #020617;
+      color: var(--text-main);
+    }
+
+    /* Ícone calendário branco */
+    .form-control-dark[type="date"] {
+      color-scheme: dark;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Crect x='2' y='3' width='12' height='11' rx='2'/%3E%3Cpath d='M5 1h1v3H5zM10 1h1v3h-1z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 18px 18px;
+    }
+
+    .form-control-dark[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .service-details {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    .professionals-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pro-card {
+      min-width: 130px;
+      background: rgba(15,23,42,0.95);
+      border-radius: 10px;
+      padding: 7px 8px;
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--text-main);
+    }
+
+    .pro-card.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(0,255,87,0.35);
+    }
+
+    .pro-name {
+      font-weight: 500;
+    }
+
+    .pro-status {
+      font-size: 0.7rem;
+      margin-top: 2px;
+    }
+
+    .status-disponivel {
+      color: var(--accent-soft);
+    }
+
+    .status-ausente {
+      color: var(--danger);
+    }
+
+    .pro-motivo {
+      font-size: 0.68rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .pro-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .horarios-lista {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .btn-horario {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.78rem;
+      padding: 4px 10px;
+    }
+
+    .btn-horario.selected {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .btn-horario:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .gorjeta-opcoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .btn-gorjeta {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.78rem;
+      padding: 3px 10px;
+    }
+
+    .btn-gorjeta.selected {
+      background: rgba(34,197,94,0.16);
+      border-color: var(--accent);
+      color: var(--accent-soft);
+    }
+
+    /* Pagamento sinal */
+    .payment-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .payment-option {
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--text-main);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .payment-option i {
+      font-size: 0.9rem;
+      color: var(--accent-soft);
+    }
+
+    .payment-option input[type="radio"] {
+      accent-color: var(--accent);
+    }
+
+    .resumo-pagamento {
+      border-radius: 12px;
+      border: 1px dashed rgba(148,163,184,0.35);
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      margin-top: 6px;
+      color: var(--text-main);
+    }
+
+    .resumo-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
+
+    .resumo-line.total {
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(148,163,184,0.35);
+    }
+
+    .info-lembrete {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    .btn-confirmar {
+      background: var(--accent);
+      border: none;
+      color: #000;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 999px;
+      padding: 8px 0;
+      margin-top: 10px;
+      width: 100%;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    .btn-confirmar:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0,255,87,0.35);
+    }
+
+    .agendamentos-lista {
+      margin-top: 4px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .agendamento-item {
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 8px 9px;
+      font-size: 0.78rem;
+      margin-bottom: 6px;
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+    }
+
+    .agendamento-item strong {
+      color: var(--accent-soft);
+    }
+
+    .agendamento-status {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .badge-status {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 2px 7px;
+      font-size: 0.7rem;
+      margin-left: 4px;
+      color: var(--text-soft);
+    }
+
+    .store-teaser {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 0.78rem;
+    }
+
+    .store-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 8px 9px;
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+    }
+
+    .store-card:hover {
+      border-color: var(--accent);
+    }
+
+    .store-card-title {
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .store-card p {
+      margin: 0;
+      font-size: 0.73rem;
+      color: var(--text-soft);
+    }
+  </style>
+</head>
+
+<body>
+<div class="cliente-page">
+
+  <header class="topo-cliente">
+    <div class="topo-left">
+      <img src="shavv.png" alt="Logo Shaver Barber" class="topo-logo">
+      <div class="topo-title">
+        <span class="app-name"><strong>Shaver</strong> Barber</span>
+      </div>
+    </div>
+
+    <div class="topo-actions">
+      <!-- Sacola / carrinho -->
+      <button class="btn-cart" onclick="window.location.href='carrinho.html'">
+        <i class="bi bi-bag"></i>
+        <span id="cartCount" class="cart-badge">0</span>
+      </button>
+
+      <button class="btn-sair" onclick="window.location.href='login.html'">
+        Sair
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout-grid">
+
+      <!-- ESQUERDA: agendamento -->
+      <section class="card-section">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="bi bi-scissors icon"></i> Novo agendamento
+          </div>
+          <div class="tag-status">
+            <span class="dot"></span> Online
+          </div>
+        </div>
+        <p class="card-subtitle">
+          Escolha o serviço, o profissional e os horários desejados. Você pode agendar mais de um horário de uma vez.
+        </p>
+
+        <div>
+          <p class="step-label">1. Serviço</p>
+          <p class="helper-text">Tempo estimado e valor aparecem automaticamente.</p>
+          <select id="servicoSelect" class="form-select-dark w-100">
+            <option value="">Selecione um serviço</option>
+            <option value="corte" data-duracao="30" data-valor="40">
+              Corte masculino
+            </option>
+            <option value="barba" data-duracao="30" data-valor="35">
+              Barba
+            </option>
+            <option value="combo" data-duracao="60" data-valor="70">
+              Corte + Barba (Combo)
+            </option>
+          </select>
+          <div id="servicoInfo" class="service-details">
+            Nenhum serviço selecionado.
+          </div>
+        </div>
+
+        <div>
+          <p class="step-label">2. Profissional</p>
+          <p class="helper-text">
+            Se o barbeiro estiver ausente, você verá o motivo e não poderá selecioná-lo.
+          </p>
+          <div id="listaProfissionais" class="professionals-list"></div>
+        </div>
+
+        <div>
+          <p class="step-label">3. Data e horários</p>
+          <p class="helper-text">
+            Você pode marcar mais de um horário. Basta clicar em vários horários disponíveis.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mb-2">
+            <input type="date" id="dataAgendamento" class="form-control-dark" style="max-width: 180px;">
+            <small class="helper-text mb-0">
+              (Para a atividade, considere qualquer data como válida.)
+            </small>
+          </div>
+          <div id="listaHorarios" class="horarios-lista"></div>
+          <small class="helper-text" id="infoHorariosSelecionados">
+            Nenhum horário selecionado.
+          </small>
+        </div>
+
+        <div>
+          <p class="step-label">4. Gorjeta (opcional)</p>
+          <p class="helper-text">
+            Você pode adicionar uma gorjeta ao valor total do serviço.
+          </p>
+          <div class="gorjeta-opcoes">
+            <button type="button" class="btn-gorjeta" data-percent="0">Sem gorjeta</button>
+            <button type="button" class="btn-gorjeta" data-percent="10">+10%</button>
+            <button type="button" class="btn-gorjeta" data-percent="15">+15%</button>
+            <button type="button" class="btn-gorjeta" data-percent="20">+20%</button>
+          </div>
+          <input
+            type="number"
+            id="gorjetaValor"
+            class="form-control-dark"
+            placeholder="ou informe um valor fixo de gorjeta (R$)"
+            min="0"
+            step="0.5"
+          >
+        </div>
+
+        <!-- Forma de pagamento do sinal -->
+        <div>
+          <p class="step-label">5. Forma de pagamento do sinal (50%)</p>
+          <p class="helper-text">
+            Escolha como deseja pagar o sinal agora. O restante irá automaticamente para o carrinho.
+          </p>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="pagamentoSinal" value="pix" checked>
+              <i class="bi bi-qr-code"></i>
+              <span>Pix</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="pagamentoSinal" value="cartao">
+              <i class="bi bi-credit-card-2-front"></i>
+              <span>Cartão</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="pagamentoSinal" value="dinheiro">
+              <i class="bi bi-cash-stack"></i>
+              <span>Dinheiro na barbearia</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <p class="step-label">6. Resumo e pagamento</p>
+          <div id="resumoPagamento" class="resumo-pagamento">
+            <div class="resumo-line">
+              <span>Serviço(s)</span>
+              <span id="resumoServicos">R$ 0,00</span>
+            </div>
+            <div class="resumo-line">
+              <span>Gorjeta</span>
+              <span id="resumoGorjeta">R$ 0,00</span>
+            </div>
+            <div class="resumo-line total">
+              <strong>Total com gorjeta</strong>
+              <strong id="resumoTotal">R$ 0,00</strong>
+            </div>
+            <div class="resumo-line">
+              <span>Sinal (50%)</span>
+              <span id="resumoSinal">R$ 0,00</span>
+            </div>
+            <div class="resumo-line">
+              <span>Restante no dia</span>
+              <span id="resumoRestante">R$ 0,00</span>
+            </div>
+          </div>
+          <p class="info-lembrete">
+            Você receberá um lembrete por volta de <strong>1h ou 30min antes</strong> do seu horário.
+            O barbeiro receberá um lembrete <strong>10 minutos antes</strong> do procedimento.
+          </p>
+        </div>
+
+        <button type="button" class="btn-confirmar" onclick="confirmarAgendamentos()">
+          Confirmar agendamento(s)
+        </button>
+      </section>
+
+      <!-- DIREITA: agenda + loja/carrinho -->
+      <section class="card-section">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="bi bi-calendar-event icon"></i> Próximo agendamento
+          </div>
+        </div>
+        <div id="proxAgendamento" class="next-appointment">
+          <div><strong>Data:</strong> 10/12/2025</div>
+          <div><strong>Hora:</strong> 14:30</div>
+          <div><strong>Barbeiro:</strong> João Santos</div>
+          <div><strong>Serviço:</strong> Corte + Barba</div>
+        </div>
+
+        <div class="card-header mt-3">
+          <div class="card-title">
+            <i class="bi bi-check2-circle icon"></i> Meus agendamentos
+          </div>
+        </div>
+        <p class="card-subtitle">
+          Visualize todos os seus horários já marcados.
+        </p>
+        <div id="listaAgendamentos" class="agendamentos-lista">
+          <div class="agendamento-item">
+            <div>
+              <strong>10/12/2025 - 14:30</strong> • Corte + Barba (João Santos)
+            </div>
+            <div class="agendamento-status">
+              <span>Status:</span>
+              <span class="badge-status">Confirmado</span>
+            </div>
+          </div>
+          <div class="agendamento-item">
+            <div>
+              <strong>02/12/2025 - 18:00</strong> • Corte (Pedro Lima)
+            </div>
+            <div class="agendamento-status">
+              <span>Status:</span>
+              <span class="badge-status">Concluído</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loja e carrinho teaser -->
+        <div class="card-header mt-3">
+          <div class="card-title">
+            <i class="bi bi-bag-check icon"></i> Loja & consumos
+          </div>
+        </div>
+        <p class="card-subtitle">
+          Acesse a loja de produtos ou veja seu carrinho de consumos da barbearia.
+        </p>
+        <div class="store-teaser">
+          <a href="loja.html" class="store-card">
+            <div class="store-card-title">Loja de produtos</div>
+            <p>Pomadas, óleos, shampoos e mais.</p>
+          </a>
+          <a href="carrinho.html" class="store-card">
+            <div class="store-card-title">Carrinho</div>
+            <p>Veja seus consumos e finalize junto com o corte.</p>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const profissionais = [
+    { id: 1, nome: "João Santos",      status: "disponivel", motivo: "" },
+    { id: 2, nome: "Pedro Lima",       status: "disponivel", motivo: "" },
+    { id: 3, nome: "Carlos Souza",     status: "ausente",    motivo: "Folga hoje" },
+    { id: 4, nome: "Claudivan Junior", status: "disponivel", motivo: "" }
+  ];
+
+  const horariosBase = [
+    "09:00","09:30","10:00","10:30",
+    "14:00","14:30","15:00","15:30",
+    "19:00","19:30"
+  ];
+
+  let profissionalSelecionado = null;
+  let horariosSelecionados = [];
+  let gorjetaPercentSelecionada = 0;
+
+  const servicoSelect = document.getElementById('servicoSelect');
+  const servicoInfo = document.getElementById('servicoInfo');
+  const listaProfissionais = document.getElementById('listaProfissionais');
+  const listaHorarios = document.getElementById('listaHorarios');
+  const infoHorariosSelecionados = document.getElementById('infoHorariosSelecionados');
+
+  const resumoServicos = document.getElementById('resumoServicos');
+  const resumoGorjeta = document.getElementById('resumoGorjeta');
+  const resumoTotal = document.getElementById('resumoTotal');
+  const resumoSinal = document.getElementById('resumoSinal');
+  const resumoRestante = document.getElementById('resumoRestante');
+
+  const gorjetaBtns = document.querySelectorAll('.btn-gorjeta');
+  const gorjetaInputValor = document.getElementById('gorjetaValor');
+  const listaAgendamentos = document.getElementById('listaAgendamentos');
+  const proxAgendamento = document.getElementById('proxAgendamento');
+
+  const cartCountSpan = document.getElementById('cartCount');
+
+  // Resumo numérico
+  let ultimoResumo = {
+    totalServicos: 0,
+    valorGorjeta: 0,
+    totalComGorjeta: 0,
+    sinal: 0,
+    restante: 0
+  };
+
+  function formatarMoeda(valor) {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function obterQuantidadeCarrinho() {
+    try {
+      const arr = JSON.parse(localStorage.getItem('shaver_cart_items') || '[]');
+      return Array.isArray(arr) ? arr.length : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function atualizarBadgeCarrinho() {
+    if (!cartCountSpan) return;
+    cartCountSpan.textContent = obterQuantidadeCarrinho();
+  }
+
+  servicoSelect.addEventListener('change', () => {
+    const option = servicoSelect.selectedOptions[0];
+    const duracao = option?.getAttribute('data-duracao');
+    const valor = option?.getAttribute('data-valor');
+
+    if (!servicoSelect.value) {
+      servicoInfo.textContent = "Nenhum serviço selecionado.";
+    } else {
+      servicoInfo.textContent =
+        `Duração aproximada: ${duracao} min • Valor: ${formatarMoeda(Number(valor))}`;
+    }
+
+    atualizarResumo();
+  });
+
+  function montarProfissionais() {
+    listaProfissionais.innerHTML = "";
+
+    profissionais.forEach((pro) => {
+      const card = document.createElement('button');
+      card.type = "button";
+      card.classList.add('pro-card');
+
+      if (pro.status === 'ausente') {
+        card.classList.add('disabled');
+        card.disabled = true;
+      }
+
+      card.dataset.id = pro.id;
+
+      const nomeDiv = document.createElement('div');
+      nomeDiv.classList.add('pro-name');
+      nomeDiv.textContent = pro.nome;
+
+      const statusDiv = document.createElement('div');
+      statusDiv.classList.add('pro-status');
+
+      if (pro.status === 'disponivel') {
+        statusDiv.classList.add('status-disponivel');
+        statusDiv.textContent = "Disponível";
+      } else {
+        statusDiv.classList.add('status-ausente');
+        statusDiv.textContent = "Ausente";
+      }
+
+      card.appendChild(nomeDiv);
+      card.appendChild(statusDiv);
+
+      if (pro.status === 'ausente' && pro.motivo) {
+        const motivoDiv = document.createElement('div');
+        motivoDiv.classList.add('pro-motivo');
+        motivoDiv.textContent = "Motivo: " + pro.motivo;
+        card.appendChild(motivoDiv);
+      }
+
+      card.addEventListener('click', () => selecionarProfissional(pro.id, card));
+
+      listaProfissionais.appendChild(card);
+    });
+  }
+
+  function selecionarProfissional(id, cardElemento) {
+    profissionalSelecionado = profissionais.find(p => p.id === id);
+
+    document.querySelectorAll('.pro-card').forEach(card => {
+      card.classList.remove('selected');
+    });
+    cardElemento.classList.add('selected');
+
+    horariosSelecionados = [];
+    montarHorarios();
+    atualizarResumo();
+  }
+
+  function montarHorarios() {
+    listaHorarios.innerHTML = "";
+
+    if (!profissionalSelecionado) {
+      infoHorariosSelecionados.textContent = "Selecione um profissional para ver os horários.";
+      return;
+    }
+
+    horariosBase.forEach(hora => {
+      const btn = document.createElement('button');
+      btn.type = "button";
+      btn.textContent = hora;
+      btn.classList.add('btn-horario');
+
+      btn.addEventListener('click', () => {
+        const index = horariosSelecionados.indexOf(hora);
+
+        if (index === -1) {
+          horariosSelecionados.push(hora);
+          btn.classList.add('selected');
+        } else {
+          horariosSelecionados.splice(index, 1);
+          btn.classList.remove('selected');
+        }
+
+        atualizarInfoHorarios();
+        atualizarResumo();
+      });
+
+      listaHorarios.appendChild(btn);
+    });
+
+    atualizarInfoHorarios();
+  }
+
+  function atualizarInfoHorarios() {
+    if (horariosSelecionados.length === 0) {
+      infoHorariosSelecionados.textContent = "Nenhum horário selecionado.";
+    } else if (horariosSelecionados.length === 1) {
+      infoHorariosSelecionados.textContent =
+        "Horário selecionado: " + horariosSelecionados[0];
+    } else {
+      infoHorariosSelecionados.textContent =
+        "Horários selecionados: " + horariosSelecionados.join(", ");
+    }
+  }
+
+  gorjetaBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      gorjetaBtns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      gorjetaPercentSelecionada = Number(btn.dataset.percent || 0);
+      gorjetaInputValor.value = "";
+      atualizarResumo();
+    });
+  });
+
+  gorjetaInputValor.addEventListener('input', () => {
+    gorjetaPercentSelecionada = 0;
+    gorjetaBtns.forEach(b => b.classList.remove('selected'));
+    atualizarResumo();
+  });
+
+  function atualizarResumo() {
+    const option = servicoSelect.selectedOptions[0];
+    const valorServico = option ? Number(option.getAttribute('data-valor') || 0) : 0;
+    const qtdAgendamentos = horariosSelecionados.length || 0;
+
+    const totalServicos = valorServico * qtdAgendamentos;
+
+    let valorGorjeta = 0;
+
+    if (gorjetaInputValor.value) {
+      valorGorjeta = Number(gorjetaInputValor.value || 0);
+    } else if (gorjetaPercentSelecionada > 0 && totalServicos > 0) {
+      valorGorjeta = (totalServicos * gorjetaPercentSelecionada) / 100;
+    }
+
+    const totalComGorjeta = totalServicos + valorGorjeta;
+    const sinal = totalComGorjeta * 0.5;
+    const restante = totalComGorjeta - sinal;
+
+    resumoServicos.textContent = formatarMoeda(totalServicos);
+    resumoGorjeta.textContent = formatarMoeda(valorGorjeta);
+    resumoTotal.textContent = formatarMoeda(totalComGorjeta);
+    resumoSinal.textContent = formatarMoeda(sinal);
+    resumoRestante.textContent = formatarMoeda(restante);
+
+    ultimoResumo = {
+      totalServicos,
+      valorGorjeta,
+      totalComGorjeta,
+      sinal,
+      restante
+    };
+  }
+
+  function adicionarItemCarrinho(item) {
+    const atual = JSON.parse(localStorage.getItem('shaver_cart_items') || '[]');
+    atual.push(item);
+    localStorage.setItem('shaver_cart_items', JSON.stringify(atual));
+    atualizarBadgeCarrinho();
+  }
+
+  function confirmarAgendamentos() {
+    const option = servicoSelect.selectedOptions[0];
+    const servico = servicoSelect.value;
+    const servicoNome = option ? option.textContent.trim() : "";
+
+    const data = document.getElementById('dataAgendamento').value;
+    const dataFormatada = data ? data.split('-').reverse().join('/') : "";
+
+    if (!servico) {
+      alert("Selecione um serviço.");
+      return;
+    }
+
+    if (!profissionalSelecionado) {
+      alert("Selecione um profissional.");
+      return;
+    }
+
+    if (!data) {
+      alert("Selecione uma data.");
+      return;
+    }
+
+    if (horariosSelecionados.length === 0) {
+      alert("Selecione pelo menos um horário.");
+      return;
+    }
+
+    const pagamentoRadio = document.querySelector('input[name="pagamentoSinal"]:checked');
+    if (!pagamentoRadio) {
+      alert("Selecione a forma de pagamento do sinal (50%).");
+      return;
+    }
+    const formaPagamentoSinal = pagamentoRadio.value;
+
+    // Salva agendamentos na lista visual
+    horariosSelecionados.forEach(horario => {
+      const item = document.createElement('div');
+      item.classList.add('agendamento-item');
+
+      const linha1 = document.createElement('div');
+      linha1.innerHTML =
+        `<strong>${dataFormatada} - ${horario}</strong> • ${servicoNome} (${profissionalSelecionado.nome})`;
+
+      const linha2 = document.createElement('div');
+      linha2.classList.add('agendamento-status');
+      linha2.innerHTML =
+        `Status: <span class="badge-status">Confirmado</span>`;
+
+      item.appendChild(linha1);
+      item.appendChild(linha2);
+
+      listaAgendamentos.prepend(item);
+    });
+
+    const primeiroHorario = horariosSelecionados[0];
+    if (primeiroHorario) {
+      proxAgendamento.innerHTML = `
+        <div><strong>Data:</strong> ${dataFormatada}</div>
+        <div><strong>Hora:</strong> ${primeiroHorario}</div>
+        <div><strong>Barbeiro:</strong> ${profissionalSelecionado.nome}</div>
+        <div><strong>Serviço:</strong> ${servicoNome}</div>
+      `;
+    }
+
+    // Envia restante (50%) para o carrinho
+    if (ultimoResumo.restante > 0) {
+      const itemCarrinho = {
+        tipo: "servico-restante",
+        descricao: `Restante 50% - ${servicoNome} (${dataFormatada} ${horariosSelecionados.join(", ")} - ${profissionalSelecionado.nome})`,
+        valor: ultimoResumo.restante,
+        horarios: [...horariosSelecionados],
+        data: data,
+        profissionalId: profissionalSelecionado.id,
+        formaSinal: formaPagamentoSinal,
+        criadoEm: new Date().toISOString()
+      };
+      adicionarItemCarrinho(itemCarrinho);
+    }
+
+    alert(
+      `Agendamento(s) confirmado(s)!\n\n` +
+      `Sinal (50%): ${formatarMoeda(ultimoResumo.sinal)} pago via ${formaPagamentoSinal.toUpperCase()} (simulação).\n` +
+      `O restante (${formatarMoeda(ultimoResumo.restante)}) foi enviado para o carrinho.`
+    );
+
+    horariosSelecionados = [];
+    montarHorarios();
+    atualizarResumo();
+  }
+
+  montarProfissionais();
+  atualizarResumo();
+  atualizarBadgeCarrinho();
+</script>
+
+</body>
+</html>
