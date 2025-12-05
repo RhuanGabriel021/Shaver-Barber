@@ -92,11 +92,6 @@
       text-shadow: 0 0 10px rgba(0,255,87,0.6);
     }
 
-    .topo-title span.section {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-    }
-
     .topo-right {
       display: flex;
       align-items: center;
@@ -584,7 +579,7 @@
             <i class="bi bi-check2-circle"></i> Salvar barbeiro
           </button>
           <p class="helper-text">
-            Em um sistema completo, esse cadastro já ligaria o barbeiro a um login próprio com permissões específicas.
+            Ao salvar, um token único é gerado para este barbeiro usar no cadastro do app.
           </p>
         </form>
 
@@ -632,6 +627,17 @@
     });
   }
 
+  // Gera token simples para o barbeiro usar no cadastro
+  function gerarTokenBarbeiro(tamanho = 8) {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let token = '';
+    for (let i = 0; i < tamanho; i++) {
+      const indice = Math.floor(Math.random() * caracteres.length);
+      token += caracteres.charAt(indice);
+    }
+    return token;
+  }
+
   function obterRegistrosFinanceiros() {
     try {
       const salvo = JSON.parse(localStorage.getItem(STORAGE_FINANCE_KEY) || '[]');
@@ -653,12 +659,12 @@
       }
     } catch (e) {}
 
-    // Se não tiver nada salvo, cria lista padrão
+    // Se não tiver nada salvo, cria lista padrão (já com tokens)
     const padrao = [
-      { id: 1, nome: 'João Santos', apelido: 'João', comissao: 50, status: 'ativo' },
-      { id: 2, nome: 'Pedro Lima', apelido: 'Pedro', comissao: 50, status: 'ativo' },
-      { id: 3, nome: 'Carlos Souza', apelido: 'Carlos', comissao: 50, status: 'ativo' },
-      { id: 4, nome: 'Claudivan Junior', apelido: 'Claudivan', comissao: 50, status: 'ativo' }
+      { id: 1, nome: 'João Santos',   apelido: 'João',     comissao: 50, status: 'ativo', token: gerarTokenBarbeiro() },
+      { id: 2, nome: 'Pedro Lima',    apelido: 'Pedro',    comissao: 50, status: 'ativo', token: gerarTokenBarbeiro() },
+      { id: 3, nome: 'Carlos Souza',  apelido: 'Carlos',   comissao: 50, status: 'ativo', token: gerarTokenBarbeiro() },
+      { id: 4, nome: 'Claudivan Junior', apelido: 'Claudivan', comissao: 50, status: 'ativo', token: gerarTokenBarbeiro() }
     ];
     salvarBarbeiros(padrao);
     return padrao;
@@ -812,6 +818,20 @@
 
   let barbeiros = obterBarbeiros();
 
+  // Garante que todos os barbeiros tenham token
+  function garantirTokensBarbeiros() {
+    let alterou = false;
+    for (let i = 0; i < barbeiros.length; i++) {
+      if (!barbeiros[i].token) {
+        barbeiros[i].token = gerarTokenBarbeiro();
+        alterou = true;
+      }
+    }
+    if (alterou) {
+      salvarBarbeiros(barbeiros);
+    }
+  }
+
   function renderizarBarbeiros() {
     listaBarbeiros.innerHTML = '';
 
@@ -839,7 +859,7 @@
 
       const extra = document.createElement('div');
       extra.classList.add('barbeiro-extra');
-      extra.textContent = 'Comissão: ' + (b.comissao || COMISSAO_PADRAO) + '%';
+      extra.textContent = 'Comissão: ' + (b.comissao || COMISSAO_PADRAO) + '% • Token: ' + (b.token || '—');
 
       info.appendChild(nome);
       info.appendChild(extra);
@@ -911,18 +931,27 @@
       }
 
       const novoId = barbeiros.length > 0 ? barbeiros[barbeiros.length - 1].id + 1 : 1;
+      const token = gerarTokenBarbeiro(); // token para cadastro no app
 
       const novoBarbeiro = {
         id: novoId,
         nome: nome,
         apelido: apelido,
         comissao: comissao,
-        status: status
+        status: status,
+        token: token
       };
 
       barbeiros.push(novoBarbeiro);
       salvarBarbeiros(barbeiros);
       renderizarBarbeiros();
+
+      alert(
+        'Barbeiro cadastrado com sucesso!\n\n' +
+        'Token de acesso para cadastro no app:\n' +
+        token +
+        '\n\nEnvie este código para o barbeiro e peça para ele informar no campo de token ao criar a conta.'
+      );
 
       formNovoBarbeiro.reset();
       inputNovaComissao.value = COMISSAO_PADRAO;
@@ -930,6 +959,7 @@
   }
 
   // Inicialização
+  garantirTokensBarbeiros();
   atualizarPainelFinanceiro();
   renderizarBarbeiros();
 </script>

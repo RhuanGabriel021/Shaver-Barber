@@ -258,12 +258,12 @@
 
           <!-- Campos específicos para BARBEIRO -->
           <div id="campos-barbeiro" class="tipo-extra mb-2">
-            <label for="codigoBarbeiro" class="form-label">Código do barbeiro</label>
+            <label for="tokenBarbeiro" class="form-label">Token do barbeiro</label>
             <input
               type="text"
-              id="codigoBarbeiro"
+              id="tokenBarbeiro"
               class="form-control"
-              placeholder="Código interno fornecido pela barbearia"
+              placeholder="Token fornecido pela barbearia (ex.: 8 letras/números)"
             >
           </div>
 
@@ -304,11 +304,22 @@
     </div>
 
     <script>
+      const STORAGE_BARBERS_KEY = 'shaver_barbers';
+
       const tipoSelect = document.getElementById('tipoAcesso');
       const camposCliente = document.getElementById('campos-cliente');
       const camposBarbeiro = document.getElementById('campos-barbeiro');
       const cpfCliente = document.getElementById('cpfCliente');
-      const codigoBarbeiro = document.getElementById('codigoBarbeiro');
+      const tokenBarbeiro = document.getElementById('tokenBarbeiro');
+
+      function obterBarbeiros() {
+        try {
+          const salvo = JSON.parse(localStorage.getItem(STORAGE_BARBERS_KEY) || '[]');
+          return Array.isArray(salvo) ? salvo : [];
+        } catch (e) {
+          return [];
+        }
+      }
 
       tipoSelect.addEventListener('change', function () {
         const tipo = this.value;
@@ -317,14 +328,14 @@
         camposCliente.style.display = 'none';
         camposBarbeiro.style.display = 'none';
         cpfCliente.required = false;
-        codigoBarbeiro.required = false;
+        tokenBarbeiro.required = false;
 
         if (tipo === 'cliente') {
           camposCliente.style.display = 'block';
           cpfCliente.required = true;
         } else if (tipo === 'barbeiro') {
           camposBarbeiro.style.display = 'block';
-          codigoBarbeiro.required = true;
+          tokenBarbeiro.required = true;
         }
       });
 
@@ -360,17 +371,46 @@
         }
 
         if (tipo === "barbeiro") {
-          if (!codigoBarbeiro.value.trim()) {
-            alert("Informe o código do barbeiro.");
+          const tokenDigitado = tokenBarbeiro.value.trim().toUpperCase();
+
+          if (!tokenDigitado) {
+            alert("Informe o token do barbeiro.");
             return;
           }
+
+          const barbeiros = obterBarbeiros();
+
+          if (!barbeiros || barbeiros.length === 0) {
+            alert("Nenhum barbeiro foi configurado ainda. Peça para a barbearia gerar seu token no painel admin.");
+            return;
+          }
+
+          const barbeiroEncontrado = barbeiros.find(function (b) {
+            const tokenSalvo = (b.token || '').toUpperCase();
+            return tokenSalvo === tokenDigitado;
+          });
+
+          if (!barbeiroEncontrado) {
+            alert("Token inválido. Confirme com a barbearia se o código está correto.");
+            return;
+          }
+
+          if (barbeiroEncontrado.status !== 'ativo') {
+            alert("Este token está ligado a um barbeiro bloqueado/inativo. Fale com a barbearia para liberar seu acesso.");
+            return;
+          }
+
+          // Aqui você já sabe que:
+          // - o token existe
+          // - o barbeiro está ativo
+          // Se quiser, pode salvar a relação usuario x barbeiro no localStorage em outro momento.
         }
 
         // Simulação de cadastro para a atividade:
         if (tipo === "cliente") {
           alert("Conta de cliente criada com sucesso! Agora você já pode fazer login.");
         } else {
-          alert("Conta de barbeiro criada com sucesso! Agora você já pode fazer login.");
+          alert("Conta de barbeiro criada com sucesso! Token validado com sucesso, acesso liberado.");
         }
 
         window.location.href = "login.html";
